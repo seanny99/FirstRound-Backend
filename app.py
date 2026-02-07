@@ -10,6 +10,8 @@ from config.config import FRONTEND_ORIGIN, get_database, get_mongo_client, get_m
 
 # Import route blueprints
 from routes.health import health_bp
+from routes.job_descriptions import job_descriptions_bp
+from routes.resumes import resumes_bp
 
 
 def create_app() -> Flask:
@@ -25,11 +27,19 @@ def create_app() -> Flask:
 
     # Register blueprints
     app.register_blueprint(health_bp)
+    app.register_blueprint(job_descriptions_bp)
+    app.register_blueprint(resumes_bp)
 
     # Optional: expose DB on app for routes that need it
     @app.before_request
     def set_db():
         app.db = get_database()
+
+    # Log registered API routes on startup
+    with app.app_context():
+        rules = sorted(r.rule for r in app.url_map.iter_rules() if r.rule.startswith("/api"))
+        if rules:
+            print("[API routes]", ", ".join(rules))
 
     return app
 
@@ -48,4 +58,6 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"[MongoDB] Not connected: {e}")
     # Run so frontend (localhost:3000) can call this backend (e.g. localhost:5000)
-    app.run(host="0.0.0.0", port=port, debug=True)
+    # Disable reloader on Windows to avoid WinError 10038 (socket not valid after restart)
+    use_reloader = os.name != "nt"
+    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=use_reloader)
