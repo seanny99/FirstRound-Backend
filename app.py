@@ -19,7 +19,7 @@ def create_app() -> Flask:
     # CORS: allow frontend at localhost:3000 to call this backend
     CORS(
         app,
-        origins=[FRONTEND_ORIGIN, "http://127.0.0.1:3000"],
+        resources={r"/api/*": {"origins": [FRONTEND_ORIGIN, "http://127.0.0.1:3000", "http://localhost:3000"]}},
         allow_headers=["Content-Type", "Authorization"],
         supports_credentials=True,
     )
