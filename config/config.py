@@ -3,6 +3,7 @@ Application configuration and MongoDB connection.
 Use environment variable MONGODB_URI to override in production.
 """
 import os
+from urllib.parse import urlparse
 from pymongo import MongoClient
 from pymongo.database import Database
 from pymongo.collection import Collection
@@ -20,6 +21,12 @@ DB_NAME = os.getenv("MONGODB_DB_NAME", "FirstRound")
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
 
 _client: MongoClient | None = None
+
+
+def get_mongo_server_name() -> str:
+    """Return the MongoDB server host from the URI (no credentials)."""
+    parsed = urlparse(MONGODB_URI)
+    return parsed.hostname or parsed.netloc or "unknown"
 
 
 def get_mongo_client() -> MongoClient:

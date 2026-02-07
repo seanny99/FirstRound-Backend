@@ -6,7 +6,7 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
-from config.config import FRONTEND_ORIGIN, get_database, get_mongo_client
+from config.config import FRONTEND_ORIGIN, get_database, get_mongo_client, get_mongo_server_name
 
 # Import route blueprints
 from routes.health import health_bp
@@ -40,6 +40,8 @@ app = create_app()
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     # Check MongoDB connection and print status
+    server_name = get_mongo_server_name()
+    print(f"[MongoDB] Server: {server_name}")
     try:
         get_mongo_client().admin.command("ping")
         print("[MongoDB] Connected successfully.")
