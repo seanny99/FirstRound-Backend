@@ -10,6 +10,7 @@ from config.config import FRONTEND_ORIGIN, get_database, get_mongo_client, get_m
 
 # Import route blueprints
 from routes.health import health_bp
+from routes.jobDescription import jobDescriptionBp
 
 
 def create_app() -> Flask:
@@ -25,6 +26,7 @@ def create_app() -> Flask:
 
     # Register blueprints
     app.register_blueprint(health_bp)
+    app.register_blueprint(jobDescriptionBp)
 
     # Optional: expose DB on app for routes that need it
     @app.before_request
