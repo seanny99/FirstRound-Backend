@@ -10,8 +10,9 @@ from config.config import FRONTEND_ORIGIN, get_database, get_mongo_client, get_m
 
 # Import route blueprints
 from routes.health import health_bp
-from routes.job_descriptions import job_descriptions_bp
+from routes.jobDescription import jobDescriptionBp
 from routes.resumes import resumes_bp
+
 
 
 def create_app() -> Flask:
@@ -20,14 +21,14 @@ def create_app() -> Flask:
     # CORS: allow frontend at localhost:3000 to call this backend
     CORS(
         app,
-        origins=[FRONTEND_ORIGIN, "http://127.0.0.1:3000"],
+        resources={r"/api/*": {"origins": [FRONTEND_ORIGIN, "http://127.0.0.1:3000", "http://localhost:3000"]}},
         allow_headers=["Content-Type", "Authorization"],
         supports_credentials=True,
     )
 
     # Register blueprints
     app.register_blueprint(health_bp)
-    app.register_blueprint(job_descriptions_bp)
+    app.register_blueprint(jobDescriptionBp)
     app.register_blueprint(resumes_bp)
 
     # Optional: expose DB on app for routes that need it
