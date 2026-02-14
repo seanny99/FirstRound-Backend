@@ -16,15 +16,15 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Backend runs at **http://localhost:6000**. Frontend at **http://localhost:3000** can call it.
+Backend runs at **http://localhost:5555**. Frontend at **http://localhost:3000** can call it.
 
 ## Connect from frontend
 
-- Base URL: `http://localhost:6000`
-- Health: `GET http://localhost:6000/api/health`
-- DB check: `GET http://localhost:6000/api/health/db`
+- Base URL: `http://localhost:5555`
+- Health: `GET http://localhost:5555/api/health`
+- DB check: `GET http://localhost:5555/api/health/db`
 
-Example (fetch): `fetch('http://localhost:6000/api/health')`
+Example (fetch): `fetch('http://localhost:5555/api/health')`
 
 ## Structure
 

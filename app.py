@@ -66,7 +66,7 @@ app = create_app()
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 6000))
+    port = int(os.getenv("PORT", 5555))
     # Check MongoDB connection and print status
     server_name = get_mongo_server_name()
     print(f"[MongoDB] Server: {server_name}")
@@ -75,7 +75,7 @@ if __name__ == "__main__":
         print("[MongoDB] Connected successfully.")
     except Exception as e:
         print(f"[MongoDB] Not connected: {e}")
-    # Run so frontend (localhost:3000) can call this backend (e.g. localhost:6000)
+    # Run so frontend (localhost:3000) can call this backend (e.g. localhost:5555)
     # Disable reloader on Windows to avoid WinError 10038 (socket not valid after restart)
     use_reloader = os.name != "nt"
     app.run(host="0.0.0.0", port=port, debug=True, use_reloader=use_reloader)
